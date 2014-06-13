@@ -1,0 +1,13 @@
+c:\users\philippe\documents\visual studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\bin\Debug\OsuSongFormatter.exe.config
+c:\users\philippe\documents\visual studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\bin\Debug\OsuSongFormatter.exe
+c:\users\philippe\documents\visual studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\bin\Debug\OsuSongFormatter.pdb
+c:\users\philippe\documents\visual studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Debug\OsuSongFormatter.frmOsuSongFormatter.resources
+c:\users\philippe\documents\visual studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Debug\OsuSongFormatter.Properties.Resources.resources
+c:\users\philippe\documents\visual studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Debug\OsuSongFormatter.csproj.GenerateResource.Cache
+c:\users\philippe\documents\visual studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Debug\OsuSongFormatter.exe
+c:\users\philippe\documents\visual studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Debug\OsuSongFormatter.pdb
+C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\bin\Debug\taglib-sharp.dll
+C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\bin\Debug\OsuSongFormatter.exe.manifest
+C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\bin\Debug\OsuSongFormatter.application
+C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Debug\OsuSongFormatter.exe.manifest
+C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Debug\OsuSongFormatter.application
