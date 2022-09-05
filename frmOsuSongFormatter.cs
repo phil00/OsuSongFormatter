@@ -18,10 +18,13 @@ namespace OsuSongFormatter
     {
         private int _intNbSong = 0;
         private int _intCurSong = 0;
+        private String _strCurError;
 
         private delegate void DeleguePgbTransfert();
 
         private delegate void DelegueLblTransfert();
+
+        private delegate void DelegueLbError();
 
         public frmOsuSongFormatter()
         {
@@ -129,6 +132,8 @@ namespace OsuSongFormatter
             DelegueLblTransfert dgLblTransfertUpdate = delegate { this.lblTransfert.Text = _intCurSong + "/" + _intNbSong; ; this.lblTransfert.Refresh(); };
             DeleguePgbTransfert dgPgbTransfertReset = delegate { this.pgbTransfert.Value = 0; this.pgbTransfert.Refresh(); };
             DelegueLblTransfert dgLblTransfertReset = delegate { _intCurSong = 0; this.lblTransfert.Text = "0/" + _intNbSong; ; this.lblTransfert.Refresh(); };
+            DelegueLbError dgLbError = delegate { this.lbError.Items.Add(_strCurError); this.lbError.Refresh(); };
+            
             _intNbSong = diSongsFolderList.Length;
 
             this.Invoke(dgPgbTransfertReset);
@@ -136,57 +141,67 @@ namespace OsuSongFormatter
 
             foreach (DirectoryInfo diSongFolder in diSongsFolderList)
             {
-                bool blnImgFound = false;
-                IPicture ipImg = new Picture();
-                if (diSongFolder.Name != "tutorial")
+                try
                 {
-                    foreach (FileInfo fiFileInFolder in diSongFolder.GetFiles())
+                    bool blnImgFound = false;
+                    IPicture ipImg = new Picture();
+                    if (diSongFolder.Name != "tutorial")
                     {
-                        if (fiFileInFolder.Extension == ".jpg")
+                        FileInfo[] fiFilesInFolder = diSongFolder.GetFiles();
+                        foreach (FileInfo fiFileInFolder in fiFilesInFolder)
                         {
-                            blnImgFound = true;
-                            ipImg = new Picture(fiFileInFolder.FullName);
-                        }
-
-                        if (fiFileInFolder.Extension == ".mp3" || fiFileInFolder.Extension == ".ogg")
-                        {
-                            if (!new FileInfo(diDestinationFolder.FullName + "\\" + GetSongName(diSongFolder) + fiFileInFolder.Extension).Exists)
+                            if (fiFileInFolder.Extension == ".jpg")
                             {
-                                String strSongName = GetSongName(diSongFolder);
-                                String strPath = diDestinationFolder.FullName + "\\" + strSongName + fiFileInFolder.Extension;
-                                System.IO.File.Copy(fiFileInFolder.FullName, strPath, false);
+                                blnImgFound = true;
+                                ipImg = new Picture(fiFileInFolder.FullName);
+                            }
 
-                                String[] strArtistAndTitle = strSongName.Split(new string[1] { " - " }, StringSplitOptions.None);
-                                String strAlbum = "Osu!";
-                                String[] strPerformers = new String[1] { strArtistAndTitle[0] };
-
-                                if (fiFileInFolder.Extension == ".mp3")
+                            if (fiFileInFolder.Length > 0 && (fiFileInFolder.Extension == ".mp3" || (fiFileInFolder.Extension == ".ogg" && !fiFilesInFolder.Any(x => x.Extension == ".mp3"))))
+                            {
+                                if (!new FileInfo(diDestinationFolder.FullName + "\\" + GetSongName(diSongFolder) + fiFileInFolder.Extension).Exists)
                                 {
-                                    TagLib.File fMpegSong = TagLib.Mpeg.File.Create(strPath);
-                                    TagEditor(fMpegSong, strAlbum, strPerformers, strArtistAndTitle, blnImgFound, ipImg);
+                                    String strSongName = GetSongName(diSongFolder);
+                                    String strPath = diDestinationFolder.FullName + "\\" + strSongName + fiFileInFolder.Extension;
+                                    System.IO.File.Copy(fiFileInFolder.FullName, strPath, false);
 
-                                }
-                                else
-                                {
-                                    if (fiFileInFolder.Extension == ".ogg")
+                                    String[] strArtistAndTitle = strSongName.Split(new string[1] { " - " }, StringSplitOptions.None);
+                                    String strAlbum = "Osu!";
+                                    String[] strPerformers = new String[1] { strArtistAndTitle[0] };
+
+                                    if (fiFileInFolder.Extension == ".mp3")
                                     {
-                                        TagLib.File fOggSong = TagLib.Ogg.File.Create(strPath);
-                                        TagEditor(fOggSong, strAlbum, strPerformers, strArtistAndTitle, blnImgFound, ipImg);
+                                        TagLib.File fMpegSong = TagLib.Mpeg.File.Create(strPath);
+                                        TagEditor(fMpegSong, strAlbum, strPerformers, strArtistAndTitle, blnImgFound, ipImg);
+
+                                    }
+                                    else
+                                    {
+                                        if (fiFileInFolder.Extension == ".ogg")
+                                        {
+                                            TagLib.File fOggSong = TagLib.Ogg.File.Create(strPath);
+                                            TagEditor(fOggSong, strAlbum, strPerformers, strArtistAndTitle, blnImgFound, ipImg);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                    _intCurSong++;
+                    this.Invoke(dgLblTransfertUpdate);
+                    this.Invoke(dgPgbTransfertUpdate);
                 }
-                _intCurSong++;
-                this.Invoke(dgLblTransfertUpdate);
-                this.Invoke(dgPgbTransfertUpdate);
+                catch(Exception ex)
+                {
+                    _strCurError = $"{_intCurSong} - {diSongFolder?.Name} : {ex.ToString()}";
+                    this.Invoke(dgLbError);
+                }
             }
             MessageBox.Show("Operation terminated successfully!");
         }
 
         private void TagEditor(TagLib.File fSong, String strAlbum, String[] strPerformers, String[] strArtistAndTitle, bool blnImgFound, IPicture ipImg)
         {
+            DelegueLbError dgLbError = delegate { this.lbError.Items.Add(_strCurError); this.lbError.Refresh(); };
             try
             {
                 fSong.Tag.Album = strAlbum;
@@ -207,7 +222,14 @@ namespace OsuSongFormatter
             }
             catch (Exception ex)
             {
-                lbError.Items.Add(ex.ToString());
+                String strTitle = "";
+                try
+                {
+                    strTitle = String.Join(" - ", strArtistAndTitle);
+                }
+                catch(Exception) {}
+                _strCurError = $"{_intCurSong} - {strTitle} : {ex.ToString()}";
+                this.Invoke(dgLbError);
             }
         }
 

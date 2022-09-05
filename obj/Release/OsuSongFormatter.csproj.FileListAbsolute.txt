@@ -12,3 +12,14 @@ C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSong
 C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Release\OsuSongFormatter.exe.manifest
 C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Release\OsuSongFormatter.application
 C:\Users\Philippe\Documents\Visual Studio 2012\Projects\OsuSongFormatter\OsuSongFormatter\obj\Release\OsuSongFormatter.csprojResolveAssemblyReference.cache
+G:\Document\OsuSongFormatter\bin\Release\OsuSongFormatter.exe.config
+G:\Document\OsuSongFormatter\bin\Release\OsuSongFormatter.exe
+G:\Document\OsuSongFormatter\bin\Release\OsuSongFormatter.pdb
+G:\Document\OsuSongFormatter\obj\Release\OsuSongFormatter.csprojAssemblyReference.cache
+G:\Document\OsuSongFormatter\obj\Release\OsuSongFormatter.frmOsuSongFormatter.resources
+G:\Document\OsuSongFormatter\obj\Release\OsuSongFormatter.Properties.Resources.resources
+G:\Document\OsuSongFormatter\obj\Release\OsuSongFormatter.csproj.GenerateResource.cache
+G:\Document\OsuSongFormatter\obj\Release\OsuSongFormatter.csproj.CoreCompileInputs.cache
+G:\Document\OsuSongFormatter\obj\Release\OsuSongFormatter.csproj.CopyComplete
+G:\Document\OsuSongFormatter\obj\Release\OsuSongFormatter.exe
+G:\Document\OsuSongFormatter\obj\Release\OsuSongFormatter.pdb
